@@ -1,17 +1,27 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { CarMakeSelection } from './components/CarMakeSelection.js';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+const App = function() {
+  return (
+    <div>
+      <h1 id="welcome">Welcome</h1>
+      <CarMakeSelection />
+    </div>
+  );
+}
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+
+// eslint-disable-next-line no-undef
+ReactDOM.render(<App />, document.getElementById('root'));
+
+
+
+
+
