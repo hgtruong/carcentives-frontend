@@ -15,9 +15,9 @@ import { DialogSpinner } from '../utils/dialogSpinner.js';
 
 function CarMakeSelection(props) {
   const classes = useStyles();
-  const [make, updateMake] = useFormInput('');
+  const [make] = useFormInput('');
   const [model, updateModel] = useFormInput('');
-  const [zipCode, updateZipCode] = useFormInput('');
+  const [zipCode] = useFormInput('');
   const [isValid, updateIsValid] = useFormInput(false);
   const [dialogOpen, setDialogOpen] = useState(true);
   const [dialogMessage, setDialogMessage] = useState("Setting up");
@@ -32,7 +32,7 @@ function CarMakeSelection(props) {
   useEffect(() => {
     setDialogMessage(`Retrieving makes`);
     makeServiceAPICall('/makes', 'GET', {}, {});
-  }, []);
+  }, [makeServiceAPICall]);
 
   // Models API Call
   useEffect(() => {
@@ -102,7 +102,7 @@ function CarMakeSelection(props) {
 
       <DialogSpinner dialogOpen={dialogOpen} message={dialogMessage}/>
 
-      <div className="make-model-zip-form" className={classes.formContainer}>
+      <div className={["make-model-zip-form", classes.formContainer]}>
         <FormControl className={classes.formControl}>
           <InputLabel id="makeLabel">
             Make
