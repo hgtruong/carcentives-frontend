@@ -12,6 +12,7 @@ import {
 } from '@material-ui/core';
 import { useAPIService } from '../utils/useAPIService';
 import { DialogSpinner } from '../utils/dialogSpinner.js';
+import './CarMakeSelection.css';
 
 function CarMakeSelection(props) {
   const classes = useStyles();
@@ -31,8 +32,8 @@ function CarMakeSelection(props) {
   // Makes API Call
   useEffect(() => {
     setDialogMessage(`Retrieving makes`);
-    makeServiceAPICall('/makes', 'GET', {}, {});
-  }, [makeServiceAPICall]);
+    makeServiceAPICall('https://carcentives-server.herokuapp.com/makes', 'GET', {}, {});
+  }, []);
 
   // Models API Call
   useEffect(() => {
