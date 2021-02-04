@@ -14,6 +14,8 @@ import { useAPIService } from '../utils/useAPIService';
 import { DialogSpinner } from '../utils/dialogSpinner.js';
 import './CarMakeSelection.css';
 
+const testUrl = "https://carcentives-server.herokuapp.com";
+
 function CarMakeSelection(props) {
   const classes = useStyles();
   const [make] = useFormInput('');
@@ -32,7 +34,8 @@ function CarMakeSelection(props) {
   // Makes API Call
   useEffect(() => {
     setDialogMessage(`Retrieving makes`);
-    makeServiceAPICall('https://carcentives-server.herokuapp.com/makes', 'GET', {}, {});
+    makeServiceAPICall(`${process.env.APIUrl || testUrl}/api/makes`,'GET', {}, {});
+    // eslint-disable-next-line
   }, []);
 
   // Models API Call
@@ -43,11 +46,12 @@ function CarMakeSelection(props) {
         selectedMake: make.value
       }
       setDialogMessage(`Retrieving models for ${make.value}`);
-      modelServiceAPICall('/models', 'GET', params, {});
+      modelServiceAPICall(`${process.env.APIUrl || testUrl}/api/models`, 'GET', params, {});
     } else if(make.value === "") {
       updateModel("");
       modelSetData([]);
     }
+    // eslint-disable-next-line
   }, [make.value]);
 
   // Zip Validation
@@ -57,9 +61,10 @@ function CarMakeSelection(props) {
         zipCode: zipCode.value
       }
       setDialogMessage(`Validating Zip Code`);
-      zipServiceAPICall('/validateZip', 'GET', params, {});
+      zipServiceAPICall(`${process.env.APIUrl || testUrl}/api/validateZip`, 'GET', params, {});
     } 
     updateIsValid(false);
+    // eslint-disable-next-line
   }, [zipCode.value]);
 
   useEffect(() => {
@@ -68,6 +73,7 @@ function CarMakeSelection(props) {
     } else {
       updateIsValid(false);
     }
+    // eslint-disable-next-line
   }, [zipService.data]);
 
   useEffect(() => {
@@ -95,7 +101,7 @@ function CarMakeSelection(props) {
       model: model.value,
       zipCode: zipCode.value
     }
-    carSubmmissionServiceAPICall('/carSubmission', 'POST', params, {});
+    carSubmmissionServiceAPICall('/api/carSubmission', 'POST', params, {});
   }
 
   return (
