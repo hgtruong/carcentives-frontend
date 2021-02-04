@@ -23,7 +23,6 @@ function useAPIService() {
         params: params,
         data: payLoad
       });
-      console.log('data returned is', result.data);
       setData(result.data);
     } catch (error) {
       console.log(`Error with ${method} API call for url: ${url}`);
