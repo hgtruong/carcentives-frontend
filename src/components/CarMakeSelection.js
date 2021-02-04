@@ -14,8 +14,6 @@ import { useAPIService } from '../utils/useAPIService';
 import { DialogSpinner } from '../utils/dialogSpinner.js';
 import './CarMakeSelection.css';
 
-const testUrl = "https://carcentives-server.herokuapp.com";
-
 function CarMakeSelection(props) {
   const classes = useStyles();
   const [make] = useFormInput('');
@@ -27,14 +25,14 @@ function CarMakeSelection(props) {
   const [isDisable, setIsDisable] = useState(true);
 
   const [makeService, makeServiceAPICall] = useAPIService();
-  const [modelService, modelServiceAPICall, modelSetData] = useAPIService();
+  const [modelService, modelServiceAPICall, setModelData] = useAPIService();
   const [zipService, zipServiceAPICall] = useAPIService();
   const [carSubmissionService, carSubmmissionServiceAPICall] = useAPIService();
 
   // Makes API Call
   useEffect(() => {
     setDialogMessage(`Retrieving makes`);
-    makeServiceAPICall(`${process.env.APIUrl || testUrl}/api/makes`,'GET', {}, {});
+    makeServiceAPICall(`${process.env.APIUrl}/api/makes`,'GET', {}, {});
     // eslint-disable-next-line
   }, []);
 
@@ -46,10 +44,10 @@ function CarMakeSelection(props) {
         selectedMake: make.value
       }
       setDialogMessage(`Retrieving models for ${make.value}`);
-      modelServiceAPICall(`${process.env.APIUrl || testUrl}/api/models`, 'GET', params, {});
+      modelServiceAPICall(`${process.env.APIUrl}/api/models`, 'GET', params, {});
     } else if(make.value === "") {
       updateModel("");
-      modelSetData([]);
+      setModelData([]);
     }
     // eslint-disable-next-line
   }, [make.value]);
@@ -61,7 +59,7 @@ function CarMakeSelection(props) {
         zipCode: zipCode.value
       }
       setDialogMessage(`Validating Zip Code`);
-      zipServiceAPICall(`${process.env.APIUrl || testUrl}/api/validateZip`, 'GET', params, {});
+      zipServiceAPICall(`${process.env.APIUrl}/api/validateZip`, 'POST', params, {});
     } 
     updateIsValid(false);
     // eslint-disable-next-line
