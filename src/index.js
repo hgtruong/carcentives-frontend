@@ -6,7 +6,7 @@ import { CarMakeSelection } from './components/CarMakeSelection.js';
 
 const App = function() {
   return (
-    <div>
+    <div className="App">
       <h1 id="welcome">Welcome</h1>
       <CarMakeSelection />
     </div>
@@ -20,8 +20,3 @@ reportWebVitals();
 
 // eslint-disable-next-line no-undef
 ReactDOM.render(<App />, document.getElementById('root'));
-
-
-
-
-

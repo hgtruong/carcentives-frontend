@@ -12,6 +12,7 @@ import {
 } from '@material-ui/core';
 import { useAPIService } from '../utils/useAPIService';
 import { DialogSpinner } from '../utils/dialogSpinner.js';
+import './CarMakeSelection.css';
 
 function CarMakeSelection(props) {
   const classes = useStyles();
@@ -24,15 +25,16 @@ function CarMakeSelection(props) {
   const [isDisable, setIsDisable] = useState(true);
 
   const [makeService, makeServiceAPICall] = useAPIService();
-  const [modelService, modelServiceAPICall, modelSetData] = useAPIService();
+  const [modelService, modelServiceAPICall, setModelData] = useAPIService();
   const [zipService, zipServiceAPICall] = useAPIService();
   const [carSubmissionService, carSubmmissionServiceAPICall] = useAPIService();
 
   // Makes API Call
   useEffect(() => {
     setDialogMessage(`Retrieving makes`);
-    makeServiceAPICall('/makes', 'GET', {}, {});
-  }, [makeServiceAPICall]);
+    makeServiceAPICall(`${process.env.APIUrl}/api/makes`,'GET', {}, {});
+    // eslint-disable-next-line
+  }, []);
 
   // Models API Call
   useEffect(() => {
@@ -42,11 +44,12 @@ function CarMakeSelection(props) {
         selectedMake: make.value
       }
       setDialogMessage(`Retrieving models for ${make.value}`);
-      modelServiceAPICall('/models', 'GET', params, {});
+      modelServiceAPICall(`${process.env.APIUrl}/api/models`, 'GET', params, {});
     } else if(make.value === "") {
       updateModel("");
-      modelSetData([]);
+      setModelData([]);
     }
+    // eslint-disable-next-line
   }, [make.value]);
 
   // Zip Validation
@@ -56,9 +59,10 @@ function CarMakeSelection(props) {
         zipCode: zipCode.value
       }
       setDialogMessage(`Validating Zip Code`);
-      zipServiceAPICall('/validateZip', 'GET', params, {});
+      zipServiceAPICall(`${process.env.APIUrl}/api/validateZip`, 'POST', params, {});
     } 
     updateIsValid(false);
+    // eslint-disable-next-line
   }, [zipCode.value]);
 
   useEffect(() => {
@@ -67,6 +71,7 @@ function CarMakeSelection(props) {
     } else {
       updateIsValid(false);
     }
+    // eslint-disable-next-line
   }, [zipService.data]);
 
   useEffect(() => {
@@ -94,7 +99,7 @@ function CarMakeSelection(props) {
       model: model.value,
       zipCode: zipCode.value
     }
-    carSubmmissionServiceAPICall('/carSubmission', 'POST', params, {});
+    carSubmmissionServiceAPICall('/api/carSubmission', 'POST', params, {});
   }
 
   return (
