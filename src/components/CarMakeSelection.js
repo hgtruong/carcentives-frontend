@@ -32,7 +32,7 @@ function CarMakeSelection(props) {
   // Makes API Call
   useEffect(() => {
     setDialogMessage(`Retrieving makes`);
-    makeServiceAPICall(`${process.env.APIUrl}/api/makes`,'GET', {}, {});
+    makeServiceAPICall(`${process.env.REACT_APP_APIURL}/api/makes`,'GET', {}, {});
     // eslint-disable-next-line
   }, []);
 
@@ -44,7 +44,7 @@ function CarMakeSelection(props) {
         selectedMake: make.value
       }
       setDialogMessage(`Retrieving models for ${make.value}`);
-      modelServiceAPICall(`${process.env.APIUrl}/api/models`, 'GET', params, {});
+      modelServiceAPICall(`${process.env.REACT_APP_APIURL}/api/models`, 'GET', params, {});
     } else if(make.value === "") {
       updateModel("");
       setModelData([]);
@@ -59,7 +59,7 @@ function CarMakeSelection(props) {
         zipCode: zipCode.value
       }
       setDialogMessage(`Validating Zip Code`);
-      zipServiceAPICall(`${process.env.APIUrl}/api/validateZip`, 'POST', params, {});
+      zipServiceAPICall(`${process.env.REACT_APP_APIURL}/api/validateZip`, 'POST', params, {});
     } 
     updateIsValid(false);
     // eslint-disable-next-line
